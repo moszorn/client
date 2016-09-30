@@ -76,25 +76,7 @@ function setup(){
 }
 
 window.sec = 0;
-var btn = document.querySelector('#destroy'),btn2 = document.querySelector('#dispatch');
-btn.addEventListener('click',()=>{
-    gameManager.destroy(window.sec);
-    west.destroy(-1);
-    east.destroy(-1);
-},false);
-btn2.addEventListener('click',btnDispatch,false);
 
-function btnDispatch(){
-    west = card(assets["images/poker.json"].frames["s7"],"s7");
-    west.rotation = 1.58002;
-    west.x = 0; west.y = 350;
-    WEST_COVERS.pop().destroy();
-
-    east = card(assets["images/poker.json"].frames["d12"],"d12");
-    east.rotation = 1.58002;
-    east.x = canvas.width - 170;east.y = 350;
-    EAST_COVERS.pop().destroy();
-}
 
 
 
@@ -159,110 +141,25 @@ function startGame(suite){
 
 
 
+var btn = document.querySelector('#destroy'),btn2 = document.querySelector('#dispatch');
+btn.addEventListener('click',()=>{
+    gameManager.destroy(window.sec);
+    west.destroy(-1);
+    east.destroy(-1);
+},false);
+btn2.addEventListener('click',btnDispatch,false);
 
+function btnDispatch(){
+    const num1 = Math.floor(Math.random() * 13 ) + 1,
+        num2 = Math.floor(Math.random() * 13 ) + 1;
+    west = card(assets["images/poker.json"].frames["s"+num1],"s"+num1);
+    west.rotation = 1.58002;
+    west.x = 0; west.y = 350;
+    WEST_COVERS.pop().destroy();
 
-let N =[],E=[],S=[],W=[];
-function dealNorth(){
- let coordinate = [];
-    //partner card suite 坐落點y為 650 , x為 520 ~ 1040 間格為40
-    for(var i = 520 ; i < 1040 ; i += 40)
-    {
-        coordinate.push([i,20]);
-        N.push([i,20]);
-        imageSprite(CARD_BACK,i,20);
-    }
-    console.log(`North 座標 :`);
-    console.group();
-    let strs = [];
-    coordinate.forEach(c=>strs.push(`[${c[0]},${c[1]}]`));
-    console.log('['+ strs.join(',') +']');
-    console.groupEnd();
+    east = card(assets["images/poker.json"].frames["d"+num2],"d"+num2);
+    east.rotation = 1.58002;
+    east.x = canvas.width - 170;east.y = 350;
+    EAST_COVERS.pop().destroy();
 }
 
-function dealSourth(){
-    //[[520,650],[560,650],[600,650],[640,650],[680,650],[720,650],[760,650],[800,650],[840,650],[880,650],[920,650],[960,650],[1000,650]]
-    //Player card suite 坐落點y為 650 , x為 520 ~ 1040 間格為40
-    let coordinate = [];
-    for(var i = 520 ; i < 1040 ; i += 40)
-    {
-        imageSprite(CARD_BACK,i,650);
-        coordinate.push([i,650]);
-    S.push([i,20]);
-    }
-    console.log(`Sourth 座標 :`);
-    console.group();
-    let strs = [];
-    coordinate.forEach(c=>strs.push(`[${c[0]},${c[1]}]`));
-    console.log('['+ strs.join(',') +']');
-    console.groupEnd();
-}
-
-function dealWest(){
-    //[[20,100],[20,130],[20,160],[20,190],[20,220],[20,250],[20,280],[20,310],[20,340],[20,370],[20,400],[20,430]]
-    let coordinate = [];
-    for(var i = 100 ; i < 490 ; i += 30) {
-        imageSprite(CARD_RACK,20,i);
-        coordinate.push([20, i]);
-        W.push([20, i]);
-    }
-    console.log(`West 座標 :`);
-    console.group();
-    let strs = [];
-    coordinate.forEach(c=>strs.push(`[${c[0]},${c[1]}]`));
-    console.log('['+ strs.join(',') +']');
-    console.groupEnd();
-}
-
-function dealEast(){
-    //[[1410,100],[1410,130],[1410,160],[1410,190],[1410,220],[1410,250],[1410,280],[1410,310],[1410,340],[1410,370],[1410,400],[1410,430]]
-    let coordinate = [];
-    for(var i = 100 ; i < 490 ; i += 30) {
-        imageSprite(CARD_RACK,ctx.canvas.width - 210, i);
-        coordinate.push([ctx.canvas.width - 210, i]);
-        E.push([ctx.canvas.width - 210, i]);
-    }
-    console.log(`East 座標 :`);
-    console.group();
-    let strs = [];
-    coordinate.forEach(c=>strs.push(`[${c[0]},${c[1]}]`));
-    console.log('['+ strs.join(',') +']');
-    console.groupEnd();
-}
-
-function CardsInSea(){
-    //海底置牌點
-    let canvasCenterX = ctx.canvas.width/2,canvasCenterY = ctx.canvas.height/2,
-        placeOffsetX = 60,placeOffsetY = 20,
-        southCardPlacement = {x: canvasCenterX - placeOffsetX , y: canvasCenterY + placeOffsetY},
-        northCardPlacement = {x: canvasCenterX - placeOffsetX , y: canvasCenterY - (placeOffsetY * 10)},
-        westCardPlacement = {x: canvasCenterX - ( 3.5*placeOffsetX) , y: canvasCenterY - 120 },
-        eastCardPlacement = {x: canvasCenterX + ( 1.5*placeOffsetX),  y: canvasCenterY - 120};
-
-    ctx.drawImage(assets["images/poker.png"],600,0,120,174,
-        southCardPlacement.x,
-        southCardPlacement.y,
-        120,174);
-
-    ctx.drawImage(assets["images/poker.png"],1080,174,120,174,
-        northCardPlacement.x,
-        northCardPlacement.y,
-        120,174);
-
-    ctx.drawImage(assets["images/poker.png"],1320,522,120,174,
-        westCardPlacement.x,
-        westCardPlacement.y,
-        120,174);
-
-    ctx.drawImage(assets["images/poker.png"],960,522,120,174,
-        eastCardPlacement.x,
-        eastCardPlacement.y,
-        120,174);
-}
-
-
-let sourth = [];
-function cardSuite(src){
-    var cards = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
-    cards.forEach(c=>sourth.push(card(src.frames[c],c)));
-    console.log(`d1: %o`, sourth[0]);
-}
