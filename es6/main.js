@@ -21,11 +21,12 @@ socket.onclose= (e)=> console.log('[%con close%c]','color:green','color:black');
 socket.onerror= (e)=> console.log('[%con error%c]' ,'color:red','color:black');
 socket.onmessage= (msgjson)=>{
     let {type, id, nick, message} = JSON.parse(msgjson.data);
-    console.log(' type= %c%o, %c id= %c%o, %c nick= %c%o , %c message= %c%o','color:blue',type,'color:#555','color:blue',id,'color:#555','color:blue',nick,'color:#555','color:blue',message);
+
+    console.log('[onmessage] type= %c%o, %c id= %c%o, %c nick= %c%o , %c message= %c%o','color:blue',type,'color:#555','color:blue',id,'color:#555','color:blue',nick,'color:#555','color:blue',message);
     switch(type){
         case STATUS.close:close({code:1000,reason:'關閉連線'}); break;
         case STATUS.start:start(message);break;
-        case STATUS.assignSeat:  playerSeat = id ; break;
+        case STATUS.assignSeat:  assignSeat(id); break;
         case STATUS.auctionBridge: /* auctionBridge(message); */break;
         case STATUS.firstLead: /**/ break;
     }
@@ -55,7 +56,10 @@ function start(suite){
 function close(o){
     socket.close(o.code,o.reason);
 }
-
+function assignSeat(seat){
+    console.log('assignSeat : %o' , seat);
+    playerSeat = seat;
+}
 function setup(){
  // let src = assets["images/poker.json"];
     TABLE = assets["images/overlay.png"];

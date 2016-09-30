@@ -10,7 +10,7 @@ export const STATUS = {
     shuffle:201/*洗牌*/,
     close:-1
 };
-/*FOLLOW SUIT 跟着出什么花色*/
+
 
 export const SEAT = {s:'s',n:'n',w:'w',e:'e'};
 export const PLAYER = {
