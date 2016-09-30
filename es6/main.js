@@ -5,7 +5,7 @@ const canvas = document.querySelector('canvas'),
       competition = document.querySelector('#competition');
       competition.addEventListener('click',auctionBridge,false);
       canvas.ctx = ctx;
-
+var btn = document.querySelector('#destroy'),btn2 = document.querySelector('#dispatch');
 
 import {auctionBridge} from './noncanvas';
 import {assets} from "./assets";
@@ -99,6 +99,8 @@ function gameLoop(){
 function startGame(suite){
     NORTH = dealer.dealNorth(suite);
     SOURTH = dealer.dealSourth(suite);
+    btn.removeAttribute('disabled');
+    btn2.removeAttribute('disabled');
 }
 
 
@@ -141,7 +143,7 @@ function startGame(suite){
 
 
 
-var btn = document.querySelector('#destroy'),btn2 = document.querySelector('#dispatch');
+
 btn.addEventListener('click',()=>{
     gameManager.destroy(window.sec);
     west.destroy(-1);
