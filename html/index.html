@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {background: #eeeeee;}
+        #canvas {
+            top:0px;left:0px;
+            position:relative;-webkit-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);-moz-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+        }
+
+        div#vtable{
+            margin:2em auto; border:1px solid black;
+            background: #777ccc;
+            position:absolute;left:5em;top:-30px;
+            /*border:3px solid red;*/
+            width:1620px;height:950px;
+            display:inline;
+        }
+        #xs{
+            top:-990px;left:-50px; width:6300px;height:950px;position:relative;
+        }
+        table#competition{
+            z-index:99999; left:45em;top:150px;position:absolute;
+            box-sizing: border-box;
+            overflow: hidden;
+            margin: 4em auto;
+            border-collapse: collapse;
+            border-radius: 2em;
+            box-shadow: 0 0 .5em #000;
+        }
+      tbody { display: flex; flex-direction: column; color: #000;}
+      th#spade{background: url(/images/whatispoker_img1.png) -64px 0; width:64px;height:64px;}
+      th#heart{background: url(/images/whatispoker_img1.png) 0 0; width:64px;height:64px;}
+      th#diamond{background: url(/images/whatispoker_img1.png) -128px 0; width:64px;height:64px;}
+      th#club{background: url(/images/whatispoker_img1.png) 65px 0; width:64px;height:64px;}
+      th#noking{width:64px;}
+        td{text-align:center; width :64px;}
+        button.bid{
+            background-image: linear-gradient(to bottom, #c9c9c9, #808487);
+            width:64px;height:2em;
+            font-family: Verdana, sans-serif;
+            text-align: center;
+            font-weight: 900;
+            color: hsla(329, 82%, 53%, 0.93);
+            }
+        button.bid:hover{
+            background-image: linear-gradient(to bottom, #faf2f9, #d4d8db);
+        }
+        button.disabled:hover{
+            background-image: linear-gradient(to bottom, #c9c9c9, #808487);
+        }
+
+    </style>
+</head>
+<body>
+<table id="competition">
+    <tr><th id="club"></th></th><th id="diamond"><th id="heart"><th id="spade"></th></th><th id="noking"></th></tr>
+    <tr id="l1"><td><button class="bid" id="l1c">1</button></td><td><button  class="bid" id="l1d">1</button></td><td><button class="bid" id="l1h">1</button></td><td><button class="bid" id="l1s">1</button></td><td><button class="bid" id="l1z">1NT</button></td></tr>
+    <tr id="l2"><td><button class="bid" id="l2c">2</button></td><td><button  class="bid" id="l2d">2</button></td><td><button class="bid" id="l2h">2</button></td><td><button class="bid" id="l2s">2</button></td><td><button class="bid" id="l2z">2NT</button></td></tr>
+    <tr id="l3"><td><button class="bid" id="l3c">3</button></td><td><button  class="bid" id="l3d">3</button></td><td><button class="bid" id="l3h">3</button></td><td><button class="bid" id="l3s">3</button></td><td><button class="bid" id="l3z">3NT</button></td></tr>
+    <tr id="l4"><td><button class="bid" id="l4c">4</button></td><td><button  class="bid" id="l4d">4</button></td><td><button class="bid" id="l4h">4</button></td><td><button class="bid" id="l4s">4</button></td><td><button class="bid" id="l4z">4NT</button></td></tr>
+    <tr id="l5"><td><button class="bid" id="l5c">5</button></td><td><button  class="bid" id="l5d">5</button></td><td><button class="bid" id="l5h">5</button></td><td><button class="bid" id="l5s">5</button></td><td><button class="bid" id="l5z">5NT</button></td></tr>
+    <tr id="l6"><td><button class="bid" id="l6c">6</button></td><td><button  class="bid" id="l6d">6</button></td><td><button class="bid" id="l6h">6</button></td><td><button class="bid" id="l6s">6</button></td><td><button class="bid" id="l6z">6NT</button></td></tr>
+    <tr id="l7"><td><button class="bid" id="l7c">7</button></td><td><button  class="bid" id="l7d">7</button></td><td><button class="bid" id="l7h">7</button></td><td><button class="bid" id="l7s">7</button></td><td><button class="bid" id="l7z">7NT</button></td></tr>
+</table>
+<div id="vtable" >
+   <canvas id="canvas" width="1620" height="950"></canvas>
+    <div id="xs"></div>
+</div>
+<button id="destory">destory</button><br>
+<button id="dispatch">dispatch</button>
+<script>
+
+</script>
+
+<script src="bundle.js"></script>
+</body>
+</html>

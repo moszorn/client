@@ -1,0 +1,11 @@
+.idea/
+
+npm-debug.log
+node_modules
+
+*.desc
+*.log
+
+
+Thumbs.db
+desktop.ini
