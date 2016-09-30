@@ -23,35 +23,35 @@ export const PLAYER = {
 export const gameManager = {
     currentCards :[],
     updateNS(pointer,canvas,suite){
-            let outCard = null,destory = null;
+            let outCard = null,destroy = null;
             suite.forEach(card=>{
                 card.update(pointer,canvas);
                 if(card.state === 'down') {
                     outCard =  suite.splice(suite.indexOf(card), 1)[0];
                     if(outCard) {
-                        destory =(sec)=> setTimeout(()=>{outCard.destory();},sec);
+                        destroy =(sec)=> setTimeout(()=>{outCard.destroy();},sec);
                     }
                 }
             });
-           return destory ;
+           return destroy ;
     },
     updateNorth(pointer,canvas,suite,destory){
-       return this.updateNS(pointer,canvas,suite,destory);
+       return this.updateNS(pointer,canvas,suite,destroy);
     },
-    updateSourth(pointer,canvas,suite,destory){
-        return this.updateNS(pointer,canvas,suite,destory);
+    updateSourth(pointer,canvas,suite,destroy){
+        return this.updateNS(pointer,canvas,suite,destroy);
     },
     pushCurrent(...toDestory){
-        toDestory.forEach(destory=>{
-           if(destory)
-               this.currentCards.push(destory);
+        toDestory.forEach(destroy=>{
+           if(destroy)
+               this.currentCards.push(destroy);
         });
     },
-    destory(sec){
+    destroy(sec){
         console.log('[cardManager - destory] this.currentCards : %o', this.currentCards);
         if(this.currentCards.length > 1){
-            this.currentCards.forEach(destory=>{
-                destory(sec);
+            this.currentCards.forEach(destroy=>{
+                destroy(sec);
             });
             this.currentCards.length = 0;
         }

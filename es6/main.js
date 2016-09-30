@@ -65,9 +65,10 @@ function setup(){
     gameLoop();
 
     let fromSocket = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
+
     shuffler.shuffCtxShift().then(()=>{
         xs.style.display='none';
-       // for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
+        //for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
         for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
         for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
         startGame(fromSocket);
@@ -75,11 +76,11 @@ function setup(){
 }
 
 window.sec = 0;
-var btn = document.querySelector('#destory'),btn2 = document.querySelector('#dispatch');
+var btn = document.querySelector('#destroy'),btn2 = document.querySelector('#dispatch');
 btn.addEventListener('click',()=>{
-    gameManager.destory(window.sec);
-    west.destory(-1);
-    east.destory(-1);
+    gameManager.destroy(window.sec);
+    west.destroy(-1);
+    east.destroy(-1);
 },false);
 btn2.addEventListener('click',btnDispatch,false);
 
@@ -87,12 +88,12 @@ function btnDispatch(){
     west = card(assets["images/poker.json"].frames["s7"],"s7");
     west.rotation = 1.58002;
     west.x = 0; west.y = 350;
-    WEST_COVERS.pop().destory();
+    WEST_COVERS.pop().destroy();
 
     east = card(assets["images/poker.json"].frames["d12"],"d12");
     east.rotation = 1.58002;
     east.x = canvas.width - 170;east.y = 350;
-    EAST_COVERS.pop().destory();
+    EAST_COVERS.pop().destroy();
 }
 
 

@@ -285,8 +285,8 @@ class CardBack extends ImageSprite{
         this.vx = 45;
         this.vy = 45;
     }
-    destory(){
-        console.log('[CardBack destory]');
+    destroy(){
+        console.log('[CardBack destroy]');
         this.parent.children.splice(this.parent.children.indexOf(this),1);
     }
     render(ctx){
@@ -312,8 +312,8 @@ class CardSprite extends SpriteBase{
         this.y = y;
         this.value = value;
     }
-    destory(sec){
-        console.log('[Card destory]');
+    destroy(sec){
+        console.log('[Card destroy]');
         let that = this;
         setTimeout(()=>{
             let idx = that.parent.children.indexOf(that);

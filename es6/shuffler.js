@@ -95,7 +95,7 @@ export function dealerFun(){
     return {
         shuffle : ()=> shuffle().then(()=>shuffle()),
         shuffCtxShift:()=>{
-           return shuffle().then(()=>go());
+           return shuffle().then(()=>shuffle()).then(()=>go());
         },
         done:done
     };

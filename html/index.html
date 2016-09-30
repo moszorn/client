@@ -9,7 +9,6 @@
             top:0px;left:0px;
             position:relative;-webkit-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);-moz-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
         }
-
         div#vtable{
             margin:2em auto; border:1px solid black;
             background: #777ccc;
@@ -22,7 +21,7 @@
             top:-990px;left:-50px; width:6300px;height:950px;position:relative;
         }
         table#competition{
-            display:none;
+display:none;
             z-index:99999; left:45em;top:150px;position:absolute;
             box-sizing: border-box;
             overflow: hidden;
@@ -52,7 +51,8 @@
         button.disabled:hover{
             background-image: linear-gradient(to bottom, #c9c9c9, #808487);
         }
-
+div#rtccontainer{position:absolute;left:90%;}
+div#rtccontainer>button{font-size: xx-small;}
     </style>
 </head>
 <body>
@@ -70,8 +70,11 @@
    <canvas id="canvas" width="1620" height="950"></canvas>
     <div id="xs"></div>
 </div>
-<button id="destory">destory</button><br>
-<button id="dispatch">dispatch</button>
+
+<div id="rtccontainer"><!-- TODO: rtc goes here -->
+    <button id="destroy">UI測試<br>memory release sprites</button><br>
+    <button id="dispatch">UI測試<br>defensive side send</button>
+</div>
 <script>
 
 </script>
