@@ -53,7 +53,7 @@ class SpriteBase{
 
     get localBounds(){
         let iHaveQuestion = true;
-        if(iHaveQuestion) throw new Error('我這裡有問題,為何x:0,y:0');
+        if(iHaveQuestion) throw new Error('//TODO:');
         else  return  {  x: 0, y:0, width: this.width, height: this.height  };
     }
     get globalBounds(){ return { x: this.gx , y: this.gy, width: this.gx + this.width, height: this.gy + this.height  };    }
@@ -155,45 +155,39 @@ class SpriteBase{
 export let stage = new SpriteBase();
 
 class TextSprite extends SpriteBase{
-    constructor(content='hello world',font='1em sans-serif',fillStyle='purple',strokeStyle='#aaa', x=0,y=0){
+    constructor(content='hello world',font='1em sans-serif',fillStyle='hsla(63, 89%, 84%, 1)',strokeStyle='#aaa', x=0,y=0){
         super();
         Object.assign(this,{content, font, fillStyle, strokeStyle, x, y});
         this.textBaseline = 'top';
+
+        this.xStep = -5;
+        this.yStep = 2;
+        this.alphaStep = -.025;
+        this.scaleXStep = -.025;    this.scaleYStep = -.025;
+
+
     }
     render(ctx){
-
         ctx.font = this.font;
         ctx.strokeStyle = this.strokeStyle;
         ctx.lineWidth = this.lineWidth;
         ctx.fillStyle = this.fillStyle;
-        ctx.strokeStyle = this.storkeStyle;
+        ctx.strokeStyle = this.strokeStyle;
         ctx.textBaseline = this.textBaseline;
 
-        /*座標轉換到sprite中心,  sprite.width * sprite.pivotX (表sprite距中心百分比處)
-         sprite.x + (sprite.width * sprite.pivotX),
-         sprite.y + (sprite.height * sprite.pivotY)
-         * */
-        ctx.translate(
-            -1 * (this.width * this.pivotX),
-            -1 * (this.height * this.pivotY)
-        );
-        // ctx.translate(this.x,this.y);
+        ctx.translate(  -1 * (this.width * this.pivotX), -1 * (this.height * this.pivotY) );
+
         ctx.fillText(this.content,0,0);
         if(this.strokeStyle !== 'none') ctx.strokeText(this.content,0,0);
 
-        //因為必須字出現在canvas上後執行量測,所以底下這兩行才寫在這
+
         this.width = ctx.measureText(this.content).width;
         this.height = ctx.measureText('M').width;
     }
 }
 export function text(content, font, fillStyle, strokeStyle, x, y) {
-    //Create the sprite
     let sprite = new TextSprite(content, font, fillStyle, strokeStyle, x, y);
-
-    //Add the sprite to the stage
     stage.addChild(sprite);
-
-    //Return the sprite to the main program
     return sprite;
 }
 

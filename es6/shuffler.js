@@ -5,7 +5,7 @@ import {text,card,cardBack} from './sprite';
 export function dealerFun(){
 
     var pokerBack = "/images/bluecover.png";
-    var sourthCollection = [];
+    var SouthCollection = [];
     var F = 4;
     var offsetNS = 40,offsetWE = 20, startNSPoint = -480,startWEPoint = -200;
     var sleft,stop,nleft,ntop,wleft , wtop ,eleft,etop ;
@@ -51,13 +51,13 @@ export function dealerFun(){
         n.dataLeft = nleft ;n.dataTop = ntop;n.dataRotate = '';
         w.dataLeft = wleft;w.dataTop = wtop;w.dataRotate = 'rotate(90deg)';
 
-        sourthCollection.push(...[s,e,n,w]);
+        SouthCollection.push(...[s,e,n,w]);
     }
 
 
     function getRandom(min,max){   return Math.floor(Math.random() * (max - min + 1)) + min;}
     function done(){
-        sourthCollection.forEach((card)=>{
+        SouthCollection.forEach((card)=>{
             card.style.transition = 'transform 1s ';
             card.style.transform = `translate3d(${card.dataLeft}px,${card.dataTop}px,0px)${card.dataRotate}`;
         });
@@ -65,9 +65,9 @@ export function dealerFun(){
     function shuffle(){
         xs.style.display='block';
         return new Promise(resolve=>{
-            if(sourthCollection.length > 0)
+            if(SouthCollection.length > 0)
             {   let u = 0.5;
-                sourthCollection.forEach((card)=>{
+                SouthCollection.forEach((card)=>{
                     setTimeout(()=>{
                         card.style.transition = 'transform 1s ';
                         card.style.transform = `translate3d(${getRandom(-400,400)}px,${getRandom(-400,400)}px,0px) rotate(${getRandom(0,360)}deg)`;
@@ -79,9 +79,9 @@ export function dealerFun(){
     }
     function go(){
         return new Promise(resolve=>{
-            if(sourthCollection.length > 0)
+            if(SouthCollection.length > 0)
             {        let u = 0.5;
-                sourthCollection.forEach((card)=>{
+                SouthCollection.forEach((card)=>{
                     setTimeout(()=>{
                         card.style.transition = 'transform 1s ';
                         card.style.transform = `translate3d(${card.dataLeft}px,${card.dataTop}px,0px)${card.dataRotate}`;
@@ -137,24 +137,24 @@ const dealer = {
         return { x:this._n[idx][0] , y:this._n[idx][1]};
     }
     ,
-    getSourthCoodinateByIdx(idx){
+    getSouthCoodinateByIdx(idx){
         if( 0 > idx || idx >= this._s.length) throw new Error('out of bound _s');
         return { x:this._s[idx][0] , y:this._s[idx][1]};
     }
     ,
-    dealSourth(cards){
+    dealSouth(cards){
         cards.sort(cardsSort);
         let locateAt = 0;
-        let sourthDeck = [];
+        let SouthDeck = [];
         cards.forEach(c=>{
             let cc = card(this.src["images/poker.json"].frames[c],c);
-            let l = this.getSourthCoodinateByIdx(locateAt++);
+            let l = this.getSouthCoodinateByIdx(locateAt++);
             cc.x = l.x;
             cc.y = l.y;
             activeInteractive(cc,'s');
-            sourthDeck.push(cc);
+            SouthDeck.push(cc);
         });
-        return sourthDeck;
+        return SouthDeck;
     }
     ,
     dealNorth(cards){

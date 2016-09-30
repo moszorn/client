@@ -13,6 +13,7 @@ import {mousePointer} from "./MousePointer";
 import {stage,text,group,render,imageSprite,card,cardBack} from './sprite';
 import {dealerFun,cardsSort,dealer} from './shuffler';
 import {STATUS,SEAT,PLAYER,gameManager} from './bridge';
+import {gameTable as gameTable} from './gameTable';
 
 /********************************************************************************/
 const socket =new WebSocket('ws://localhost:8181');
@@ -21,14 +22,14 @@ socket.onclose= (e)=> console.log('[%con close%c]','color:green','color:black');
 socket.onerror= (e)=> console.log('[%con error%c]' ,'color:red','color:black');
 socket.onmessage= (msgjson)=>{
     let {type, id, nick, message} = JSON.parse(msgjson.data);
-
     console.log('[onmessage] type= %c%o, %c id= %c%o, %c nick= %c%o , %c message= %c%o','color:blue',type,'color:#555','color:blue',id,'color:#555','color:blue',nick,'color:#555','color:blue',message);
     switch(type){
-        case STATUS.close:close({code:1000,reason:'關閉連線'}); break;
-        case STATUS.start:start(message);break;
-        case STATUS.assignSeat:  assignSeat(id); break;
-        case STATUS.auctionBridge: /* auctionBridge(message); */break;
+        case STATUS.assignSeat:  onSeat(message); break;
+        case STATUS.playerJoin:  onPlayerJoin(message); break;
+        case STATUS.start:onStart(message);break;
+        case STATUS.auctionBridge: /* onAuctionBridge(message); */break;
         case STATUS.firstLead: /**/ break;
+        case STATUS.close:onClose({code:1000,reason:'關閉連線'}); break;
     }
 };
 function sent2Server(type,id,nick,message){
@@ -41,42 +42,52 @@ function sent2Server(type,id,nick,message){
 /********************************************************************************/
 assets.load(["images/poker.json","images/poker.png","images/overlay.png","images/bluecover.png","images/bluecoverR.png"]).then(() => setup());
 let TABLE ,CARD_BACK ,CARD_RACK ;
-let playerSeat , ME=[],SOURTH = [],NORTH = [] ,west , east , NORTH_COVERS=[],WEST_COVERS=[], EAST_COVERS =[], pointer;
+let playerSeat , ME=[],SOUTH = [],NORTH = [] ,west , east , NORTH_COVERS=[],WEST_COVERS=[], EAST_COVERS =[], pointer;
 let shuffler = dealerFun();
 
-function start(suite){
+function onStart(suite){
     shuffler.shuffCtxShift().then(()=>{
         xs.style.display='none';
         for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
         for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
         for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
-     SOURTH = dealer.dealSourth(suite);
+     SOUTH = dealer.dealSouth(suite);
     });
 }
-function close(o){
+function onClose(o){
     socket.close(o.code,o.reason);
 }
-function assignSeat(seat){
-    console.log('assignSeat : %o' , seat);
-    playerSeat = seat;
+function onPlayerJoin(newComer){}
+function onSeat(seats){
+    //seats = ['n','s','w'];
+     playerSeat = seats.pop();//w
+     gameTable.setTxtSpriteBeforeEffects(gameTable.setPlaySeat(playerSeat,canvasCenterX,canvasCenterY)).content = 'South';
+
+    //TODO: for loop other player seat goes here
+
+
 }
 function setup(){
- // let src = assets["images/poker.json"];
     TABLE = assets["images/overlay.png"];
     CARD_BACK =  assets['images/bluecover.png'];
     CARD_RACK =  assets['images/bluecoverR.png'];
     pointer = mousePointer(canvas);
     gameLoop();
 
+
     let fromSocket = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
 
     shuffler.shuffCtxShift().then(()=>{
         xs.style.display='none';
-        //for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
+       // for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
         for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
         for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
-        startGame(fromSocket);
+        NORTH = dealer.dealNorth(fromSocket);
+     SOUTH = dealer.dealSouth(fromSocket);
+     btn.removeAttribute('disabled');
+     btn2.removeAttribute('disabled');
     });
+
 }
 
 window.sec = 0;
@@ -87,7 +98,20 @@ window.sec = 0;
 function gameLoop(){
     requestAnimationFrame(gameLoop);
 
-    gameManager.pushCurrent(gameManager.updateNorth(pointer,canvas,NORTH),gameManager.updateSourth(pointer,canvas,SOURTH));
+    if(gameTable.playerSeat && gameTable.playerSeat.content){
+
+        if(gameTable.playerSeat.x <= 250){
+            gameTable.playerSeat.rotation = gameTable.playerSeat.xStep = gameTable.playerSeat.yStep = gameTable.playerSeat.alphaStep = gameTable.playerSeat.scaleXStep = gameTable.playerSeat.scaleYStep = 0;
+            gameTable.playerSeat.alpha = 0.8;
+        }
+        gameTable.playerSeat.rotation += gameTable.playerSeat.xStep;
+        gameTable.playerSeat.x += gameTable.playerSeat.xStep;
+        gameTable.playerSeat.y += gameTable.playerSeat.yStep;
+        gameTable.playerSeat.alpha += gameTable.playerSeat.alphaStep;
+        gameTable.playerSeat.scaleX += gameTable.playerSeat.scaleXStep;    gameTable.playerSeat.scaleY += gameTable.playerSeat.scaleYStep;
+    }
+
+    gameManager.pushCurrent(gameManager.updateNorth(pointer,canvas,NORTH),gameManager.updateSouth(pointer,canvas,SOUTH));
 
     if(west){
         if(west.x < 560)   west.x += 40;
@@ -102,7 +126,7 @@ function gameLoop(){
 
 function startGame(suite){
     NORTH = dealer.dealNorth(suite);
-    SOURTH = dealer.dealSourth(suite);
+    SOUTH = dealer.dealSOUTH(suite);
     btn.removeAttribute('disabled');
     btn2.removeAttribute('disabled');
 }
