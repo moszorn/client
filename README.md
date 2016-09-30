@@ -7,4 +7,14 @@
 ___
 ###shot###
 
+###洗牌
 
+![GitHub Logo](https://raw.githubusercontent.com/moszorn/server/master/assets/0.png)
+
+###競叫
+
+![GitHub Logo](https://raw.githubusercontent.com/moszorn/server/master/assets/1.png)
+
+
+### 
+![GitHub Logo](https://raw.githubusercontent.com/moszorn/server/master/assets/3.png)
