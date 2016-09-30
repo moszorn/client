@@ -63,7 +63,7 @@ function setup(){
     CARD_RACK =  assets['images/bluecoverR.png'];
     pointer = mousePointer(canvas);
     gameLoop();
-    /*
+
     let fromSocket = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
     shuffler.shuffCtxShift().then(()=>{
         xs.style.display='none';
@@ -71,7 +71,7 @@ function setup(){
         for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
         for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
         startGame(fromSocket);
-    });*/
+    });
 }
 
 window.sec = 0;

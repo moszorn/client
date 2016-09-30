@@ -71,7 +71,7 @@ export function dealerFun(){
                     setTimeout(()=>{
                         card.style.transition = 'transform 1s ';
                         card.style.transform = `translate3d(${getRandom(-400,400)}px,${getRandom(-400,400)}px,0px) rotate(${getRandom(0,360)}deg)`;
-                    }, -1/* 暫時mark : u++ * 100 */);
+                    }, u++ * 100/* 暫時mark : u++ * 100 */);
                 });
             }
             setTimeout(()=> {resolve();} , 5000);
@@ -86,7 +86,7 @@ export function dealerFun(){
                         card.style.transition = 'transform 1s ';
                         card.style.transform = `translate3d(${card.dataLeft}px,${card.dataTop}px,0px)${card.dataRotate}`;
                         if(card.id === 'w12') setTimeout(()=> resolve(),1.5 * 1000);
-                    }, -1/* 暫時mark : u++ * 100 */ );
+                    }, u++ * 100/* 暫時mark : u++ * 100 */ );
                 });
             }
         });
