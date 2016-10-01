@@ -16,7 +16,7 @@ import {STATUS,SEAT,PLAYER,gameManager} from './bridge';
 import {gameTable as gameTable} from './gameTable';
 
 /********************************************************************************/
-const socket =new WebSocket('ws://localhost:8181');
+const socket =new WebSocket('ws://localhost:1080');
 socket.onopen = (e)=> console.log('[%con open%c]建立連線','color:pink','color:black');
 socket.onclose= (e)=> console.log('[%con close%c]','color:green','color:black');
 socket.onerror= (e)=> console.log('[%con error%c]' ,'color:red','color:black');
@@ -75,18 +75,18 @@ function setup(){
     gameLoop();
 
 
-    let fromSocket = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
-
-    shuffler.shuffCtxShift().then(()=>{
-        xs.style.display='none';
-       // for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
-        for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
-        for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
-        NORTH = dealer.dealNorth(fromSocket);
-     SOUTH = dealer.dealSouth(fromSocket);
-     btn.removeAttribute('disabled');
-     btn2.removeAttribute('disabled');
-    });
+    // let fromSocket = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
+    //
+    // shuffler.shuffCtxShift().then(()=>{
+    //     xs.style.display='none';
+    //    // for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
+    //     for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
+    //     for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
+    //     NORTH = dealer.dealNorth(fromSocket);
+    //  SOUTH = dealer.dealSouth(fromSocket);
+    //  btn.removeAttribute('disabled');
+    //  btn2.removeAttribute('disabled');
+    // });
 
 }
 

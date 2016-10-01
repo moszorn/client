@@ -6,7 +6,7 @@
   "scripts": {
     "pack": "webpack -p --progress --colors",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --hot --inline",
+    "start": "webpack-dev-server --hot --host 0.0.0.0 --port 80 --inline",
     "go": "babel-node ./console.js",
     "babelbuild": "babel es6 --out-dir es5 --source-maps",
     "startes5": "node es5/console.js"
