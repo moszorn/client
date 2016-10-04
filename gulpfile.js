@@ -23,7 +23,7 @@ function createConfig(stage){
     config.plugins.push(new webpack.DefinePlugin({runtime:config.getRuntimeSetting(stage,assetsFiles)}));
     config.plugins.push(new CopyWebpackPlugin(config.copies));
     config.plugins.push(new webpack.NoErrorsPlugin());
-    config.publicPath.push(new webpack.optimize.UglifyJsPlugin({
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
         compress: {
             warnings: false
         }
@@ -54,9 +54,6 @@ gulp.task("watch",()=>{
         });
 
 
-    /* new CopyWebpackPlugin([ { from:  path.resolve(__dirname, 'src','assets') , to:path.resolve(__dirname, 'build','assets')} ]),
-     new webpack.NoErrorsPlugin()
-    * */
 
     config.output.publicPath = "http://localhost:"+HOT_PORT.toString();
     config.plugins.push(new webpack.HotModuleReplacementPlugin());
