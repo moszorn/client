@@ -46,10 +46,12 @@ const assets = {
     }
     ,
     loadJson(src,handler){
+
         var xhr = new XMLHttpRequest();
         xhr.responseType = 'text';
         xhr.open('GET',src,true);
         xhr.onload = e=>{
+
             if(xhr.status === 200)
             {
                 let file = JSON.parse(xhr.responseText);

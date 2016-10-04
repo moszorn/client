@@ -4,7 +4,7 @@ import {text,card,cardBack} from './sprite';
 
 export function dealerFun(){
 
-    var pokerBack = "/images/bluecover.png";
+    var pokerBack = runtime.bluecover;
     var SouthCollection = [];
     var F = 4;
     var offsetNS = 40,offsetWE = 20, startNSPoint = -480,startWEPoint = -200;
@@ -147,7 +147,7 @@ const dealer = {
         let locateAt = 0;
         let SouthDeck = [];
         cards.forEach(c=>{
-            let cc = card(this.src["images/poker.json"].frames[c],c);
+            let cc = card(this.src[runtime.pokermeta].frames[c],c);
             let l = this.getSouthCoodinateByIdx(locateAt++);
             cc.x = l.x;
             cc.y = l.y;
@@ -162,7 +162,7 @@ const dealer = {
         let locateAt = 0;
         let northDeck = [];
         cards.forEach(c=>{
-            let cc = card(this.src["images/poker.json"].frames[c],c);
+            let cc = card(this.src[runtime.pokermeta].frames[c],c);
             let l = this.getNorthCoodinateByIdx(locateAt++);
             cc.x = l.x;
             cc.y = l.y;

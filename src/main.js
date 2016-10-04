@@ -3,11 +3,10 @@ const canvas = document.querySelector('canvas'),
       canvasCenterX = ctx.canvas.width/2,
       canvasCenterY = ctx.canvas.height/2,
       competition = document.querySelector('#competition');
-      competition.addEventListener('click',auctionBridge,false);
       canvas.ctx = ctx;
 var btn = document.querySelector('#destroy'),btn2 = document.querySelector('#dispatch');
 
-import {auctionBridge} from './noncanvas';
+import {onAuctionBridge} from './noncanvas';
 import {assets} from "./assets";
 import {mousePointer} from "./MousePointer";
 import {stage,text,group,render,imageSprite,card,cardBack} from './sprite';
@@ -15,10 +14,12 @@ import {dealerFun,cardsSort,dealer} from './shuffler';
 import {STATUS,SEAT,PLAYER,gameManager} from './bridge';
 import {gameTable as gameTable} from './gameTable';
 
+
+competition.addEventListener('click',onAuctionBridge,false);
 /********************************************************************************/
 const socket =new WebSocket('ws://localhost:1080');
 socket.onopen = (e)=> console.log('[%con open%c]建立連線','color:pink','color:black');
-socket.onclose= (e)=> console.log('[%con close%c]','color:green','color:black');
+socket.onclose = (e)=> console.log('[%con close%c]','color:green','color:black');
 socket.onerror= (e)=> console.log('[%con error%c]' ,'color:red','color:black');
 socket.onmessage= (msgjson)=>{
     let {type, id, nick, message} = JSON.parse(msgjson.data);
@@ -39,8 +40,10 @@ function sent2Server(type,id,nick,message){
     console.info(`%c[send] %o`,'color:brown', tosend);
     socket.send(JSON.stringify(tosend));
 }
+
+
 /********************************************************************************/
-assets.load(["images/poker.json","images/poker.png","images/overlay.png","images/bluecover.png","images/bluecoverR.png"]).then(() => setup());
+assets.load(runtime.assets).then(() => setup());
 let TABLE ,CARD_BACK ,CARD_RACK ;
 let playerSeat , ME=[],SOUTH = [],NORTH = [] ,west , east , NORTH_COVERS=[],WEST_COVERS=[], EAST_COVERS =[], pointer;
 let shuffler = dealerFun();
@@ -68,25 +71,25 @@ function onSeat(seats){
 
 }
 function setup(){
-    TABLE = assets["images/overlay.png"];
-    CARD_BACK =  assets['images/bluecover.png'];
-    CARD_RACK =  assets['images/bluecoverR.png'];
+    TABLE = assets[runtime.overlay];
+    CARD_BACK =  assets[runtime.bluecover];
+    CARD_RACK =  assets[runtime.bluecoverR];
     pointer = mousePointer(canvas);
     gameLoop();
 
 
-    // let fromSocket = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
-    //
-    // shuffler.shuffCtxShift().then(()=>{
-    //     xs.style.display='none';
-    //    // for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
-    //     for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
-    //     for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
-    //     NORTH = dealer.dealNorth(fromSocket);
-    //  SOUTH = dealer.dealSouth(fromSocket);
-    //  btn.removeAttribute('disabled');
-    //  btn2.removeAttribute('disabled');
-    // });
+    let fromSocket = ['d1','s1','c13','d4','s6','c10','h13','h2','d5','c4','s11','h9','d3'];
+
+    shuffler.shuffCtxShift().then(()=>{
+        xs.style.display='none';
+       // for(let u of dealer._n) NORTH_COVERS.push(cardBack(CARD_BACK,0,0,u[0],u[1]));
+        for(let u of dealer._w) WEST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
+        for(let u of dealer._e) EAST_COVERS.push(cardBack(CARD_RACK,0,0,u[0],u[1]));
+        NORTH = dealer.dealNorth(fromSocket);
+     SOUTH = dealer.dealSouth(fromSocket);
+     btn.removeAttribute('disabled');
+     btn2.removeAttribute('disabled');
+    });
 
 }
 
@@ -182,12 +185,12 @@ btn2.addEventListener('click',btnDispatch,false);
 function btnDispatch(){
     const num1 = Math.floor(Math.random() * 13 ) + 1,
         num2 = Math.floor(Math.random() * 13 ) + 1;
-    west = card(assets["images/poker.json"].frames["s"+num1],"s"+num1);
+    west = card(assets[runtime.pokermeta].frames["s"+num1],"s"+num1);
     west.rotation = 1.58002;
     west.x = 0; west.y = 350;
     WEST_COVERS.pop().destroy();
 
-    east = card(assets["images/poker.json"].frames["d"+num2],"d"+num2);
+    east = card(assets[runtime.pokermeta].frames["d"+num2],"d"+num2);
     east.rotation = 1.58002;
     east.x = canvas.width - 170;east.y = 350;
     EAST_COVERS.pop().destroy();

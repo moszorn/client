@@ -1,43 +1,50 @@
+/**
+ * Created by zorn on 2016/7/4.
+ */
+let path = require("path");
 
-const path = require('path'),
-      fs = require('fs'),
-    webpack   = require('webpack'),
-    dir_js    = path.resolve(__dirname, 'es6'),
-    dir_html  = path.resolve(__dirname, 'html'),
-    dir_build = path.resolve(__dirname, 'build'),
-    CopyWebpackPlugin = require('copy-webpack-plugin');
+function config(){
+    return {
+        entry:{
+            main:["./src/main"]
+        }
+        ,
+        output:{
+            path: path.join(__dirname, "build/scripts"),
+            filename: "[name].js",
+            publicPath:"/build/"
+        }
+        ,
+        module:{
+            loaders:[
 
+                {test: /\.js/,   loader: "babel", exclude:"/node_modules/"},
 
+                {test: /\.less/, loader:"style!css!less"},
 
+                {test: /\.css/,  loader:"styles!css"},
 
-const es6Files = fs.readdirSync(dir_js);
-const entriesFiles = es6Files.map((filename)=> path.resolve(dir_js,filename));
-console.log(entriesFiles);
+                {test: /\.(png|gif|ttf|woff)/, loader:"url-loader?limit=400"}
+            ]
+        }
+        ,
+        plugins:[],
+        getRuntimeSetting( stage, files){
+            let o = {},ary = [];
+            files.forEach(f=> {
+               o[f.split('.')[0]] = '"'+stage.concat(f)+'"';
+                ary.push(o[f.split('.')[0]]);
+            });
+            o.assets = '[' + ary.join(',') +']';
+            return o;
+        }
+        ,
+        copies:[
+            { from:  path.resolve(__dirname, 'src','assets') , to:path.resolve(__dirname, 'build','assets')},
+            { from: path.resolve(__dirname, 'src','index.html'), to: path.resolve(__dirname, 'build','index.html') }
+            ]
+    };
+}
 
-module.exports = {
-    entry:entriesFiles,
-    output:{
-        path:dir_build,
-        filename:'bundle.js'
-    },
-    module:{
-        loaders:[
-            {
-                loader:'babel-loader',
-                test:dir_js
-            }
-        ]
-    },
-    plugins:[
-        new CopyWebpackPlugin([
-            { from: dir_html }
-        ]),
-        new webpack.NoErrorsPlugin()
-    ],
-    stats:{ colors: true},
-    devtool:'source-map',
-    devServer:{ contentBase:dir_build},
-    resolve:{
-        extensions:['','.js','.es6']
-    }
-};
+module.exports = config();
+module.exports.clone = config;

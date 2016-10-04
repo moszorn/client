@@ -1,5 +1,7 @@
 // var competition = document.querySelector('#competition');
 // competition.addEventListener('click',auctionBridge,false);
+
+
 export function onAuctionBridge(e){
     let emt = e.target,bid;
     if(emt.nodeType == Node.ELEMENT_NODE && emt.nodeName.indexOf('BUTTON') == 0)
