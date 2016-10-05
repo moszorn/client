@@ -11,8 +11,7 @@ function config(){
         ,
         output:{
             path: path.join(__dirname, "build/scripts"),
-            filename: "[name].js",
-            publicPath:"/build/"
+            filename: "[name].js"
         }
         ,
         module:{
@@ -22,7 +21,7 @@ function config(){
 
                 {test: /\.less/, loader:"style!css!less"},
 
-                {test: /\.css/,  loader:"styles!css"},
+                {test: /\.css/,  loader:"style!css"},
 
                 {test: /\.(png|gif|ttf|woff)/, loader:"url-loader?limit=400"}
             ]

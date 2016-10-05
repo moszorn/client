@@ -1,3 +1,5 @@
+
+import './styles/site.css';
 const canvas = document.querySelector('canvas'),
       ctx = canvas.getContext('2d'),
       canvasCenterX = ctx.canvas.width/2,
@@ -133,7 +135,6 @@ function startGame(suite){
     btn.removeAttribute('disabled');
     btn2.removeAttribute('disabled');
 }
-
 
 
 

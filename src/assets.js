@@ -6,6 +6,7 @@ const assets = {
     fontExts:["ttf","otf","ttc","woff"],
     jsonExts:['json'],
     load(sources){
+
         this.toLoad = sources.length;
         return new Promise((res)=>{
             let handler = ()=>{
@@ -18,16 +19,12 @@ const assets = {
             };
 
             sources.forEach(src=>{
-                //check src extension
                 let ext = src.split('.').pop();
                 if(this.imgExts.indexOf(ext) !== -1){this.loadImage(src,handler);}
                 else if(this.fontExts.indexOf(ext) !== -1){this.loadFont(src,handler);}
                 else if(this.jsonExts.indexOf(ext)!== -1){this.loadJson(src,handler);}
-                else {
-                    throw new Error(`File type ${source} not recognized`);
-               }
-            });//forEach
-        });//promise
+            });
+        });
     }
     ,
     loadImage(src,handler){

@@ -2,58 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-        body {background: #eeeeee;}
-        #canvas {
-            top:0px;left:0px;
-            position:relative;-webkit-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);-moz-box-shadow: 4px 4px 8px rgba(0,0,0,0.5);box-shadow: 4px 4px 8px rgba(0,0,0,0.5);
-        }
-        div#vtable{
-            margin:2em auto; border:1px solid black;
-            background: #777ccc;
-            position:absolute;left:5em;top:-30px;
-            /*border:3px solid red;*/
-            width:1620px;height:950px;
-            display:inline;
-        }
-        #xs{
-            top:-990px;left:-50px; width:6300px;height:950px;position:relative;
-        }
-        table#competition{
-display:none;
-            z-index:99999; left:45em;top:150px;position:absolute;
-            box-sizing: border-box;
-            overflow: hidden;
-            margin: 4em auto;
-            border-collapse: collapse;
-            border-radius: 2em;
-            box-shadow: 0 0 .5em #000;
-        }
-      tbody { display: flex; flex-direction: column; color: #000;}
-      th#spade{background: url(/build/assets/whatispoker_img1.png) -64px 0; width:64px;height:64px;}
-      th#heart{background: url(/build/assets/whatispoker_img1.png) 0 0; width:64px;height:64px;}
-      th#diamond{background: url(/build/assets/whatispoker_img1.png) -128px 0; width:64px;height:64px;}
-      th#club{background: url(/build/assets/whatispoker_img1.png) 65px 0; width:64px;height:64px;}
-      th#noking{width:64px;}
-        td{text-align:center; width :64px;}
-        button.bid{
-            background-image: linear-gradient(to bottom, #c9c9c9, #808487);
-            width:64px;height:2em;
-            font-family: Verdana, sans-serif;
-            text-align: center;
-            font-weight: 900;
-            color: hsla(329, 82%, 53%, 0.93);
-            }
-        button.bid:hover{
-            background-image: linear-gradient(to bottom, #faf2f9, #d4d8db);
-        }
-        button.disabled:hover{
-            background-image: linear-gradient(to bottom, #c9c9c9, #808487);
-        }
-div#rtccontainer{position:absolute;left:90%;}
-div#rtccontainer>button{font-size: xx-small;}
-    </style>
+    <title>bridge client</title>
 </head>
 <body>
 <table id="competition">
@@ -70,16 +19,12 @@ div#rtccontainer>button{font-size: xx-small;}
    <canvas id="canvas" width="1620" height="950"></canvas>
     <div id="xs"></div>
 </div>
-
+<div><!-- rtc goes here channel 0 ~ channel 3--></div>
 <div id="rtccontainer"><!-- TODO: rtc goes here -->
-    <button id="destroy" disabled>UI測試<br>memory release sprites</button><br>
-    <button id="dispatch" disabled>UI測試<br>defensive side send</button>
+    <button id="destroy" disabled>UI測試<br>清空記憶體</button><br>
+    <button id="dispatch" disabled>UI測試<br>左右方發牌測試</button>
 </div>
-<script>
-
-</script>
-
- <script src="/scripts/main.js"></script>
-<!--<script src="http://localhost:8081/main.js"></script>-->
+<!--<script src="/scripts/main.js"></script>-->
+<script src="http://localhost:8081/main.js"></script>
 </body>
 </html>
